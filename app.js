@@ -12,11 +12,13 @@ app.get("/spoiledSyntheticsCleanUp", (req, res) => {
   for (const [key, value] of Object.entries(req.query)) {
     params.push({ label: `${key}`, value: `${value}` });
   }
+
   // GET list of synthetics
   getListOfMonitorIds().then((entityListByType) => {
     // GET average avilaiblity metrics for 90 days
     getSynthAvailability(entityListByType).then((availMeans) => {
       console.log("availMeans \n" + availMeans);
+
       // TODO: DELETE or disable monitors
     });
   });
