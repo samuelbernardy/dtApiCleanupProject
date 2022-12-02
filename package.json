@@ -1,0 +1,21 @@
+{
+  "name": "Dynatrace Configuration Pollution Control",
+  "version": "1.0.1",
+  "description": "Dumping ground for config clean up actions.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Samuel Benjamin Bernardy",
+  "license": "ISC",
+  "dependencies": {
+    "@dt-esa/dynatrace-api-client": "latest",
+    "@dt-esa/platform-constants": "^1.2.1",
+    "body-parser": "^1.20.0",
+    "express": "^4.17.3",
+    "nodemon": "^2.0.15",
+    "npx": "^10.2.2",
+    "tslib": "^2.3.1"
+  }
+}
