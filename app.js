@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const port = 3000;
 // import utils
-const { getListOfMonitorIds, getSynthAvailability } = require("./utils.js");
+const { getListByType, buildIterable } = require("./utils.js");
 
 // DISABLE SPOILED SYNTHETICS (UNAVAILABLE FOR 90 DAYS)
 app.get("/spoiledSyntheticsCleanUp", (req, res) => {
@@ -14,12 +14,18 @@ app.get("/spoiledSyntheticsCleanUp", (req, res) => {
   }
 
   // GET list of synthetics
-  getListOfMonitorIds().then((entityListByType) => {
+  getListByType().then((entityListByType) => {
     // GET average avilaiblity metrics for 90 days
-    getSynthAvailability(entityListByType).then((availMeans) => {
-      console.log("availMeans \n" + availMeans);
-
+    buildIterable(entityListByType).then((iterable) => {
       // TODO: DELETE or disable monitors
+      Promise.all(iterable).then((availData) => {
+        availData.forEach((monitor) => {
+          if (monitor.avail == 0) {
+            //do delete call
+            console.log("Deleting monitor: ", monitor.entity);
+          }
+        });
+      });
     });
   });
 });
