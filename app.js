@@ -17,13 +17,15 @@ app.get("/spoiledSyntheticsCleanUp", (req, res) => {
   getListByType().then((entityListByType) => {
     // GET average avilaiblity metrics for 90 days
     buildIterable(entityListByType).then((iterable) => {
-      // TODO: DELETE or disable monitors
       Promise.all(iterable).then((availData) => {
-        availData.forEach((monitor) => {
-          if (monitor.avail == 0) {
-            //do delete call
-            console.log("Deleting monitor: ", monitor.entity);
-          }
+        console.log("Returned monitors: " + availData.length + " found");
+        let spoiledMonitors = availData.filter((avail) => avail.avail == 0);
+        console.log(
+          "Deleting spoiled monitors: ",
+          spoiledMonitors.length + " in queue"
+        );
+        spoiledMonitors.forEach((monitor) => {
+          // TODO: DELETE or disable monitors
         });
       });
     });
