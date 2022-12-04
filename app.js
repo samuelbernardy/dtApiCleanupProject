@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const port = 3000;
 // import utils
-const { getListByType, buildIterable } = require("./utils.js");
+const { getListByType, buildIterable } = require("./spoiledSyntheticsUtils.js");
 
 // DISABLE SPOILED SYNTHETICS (UNAVAILABLE FOR 90 DAYS)
 app.get("/spoiledSyntheticsCleanUp", (req, res) => {
