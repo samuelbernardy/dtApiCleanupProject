@@ -2,7 +2,6 @@
 // https://github.com/dynatrace-esa/dynatrace-api-client
 const dynatraceApiClient = require("@dt-esa/dynatrace-api-client");
 const { DynatraceTenantAPI } = require("@dt-esa/dynatrace-api-client");
-const { application } = require("express");
 // build api client
 const apiConfig = require("./apiConfig.json");
 const dtAPI = new DynatraceTenantAPI(
@@ -80,6 +79,23 @@ function getSynthAvailability(entity) {
   });
 }
 module.exports = {
+  //Disable Monitor
+  getMonitor: function (entityId) {
+    return newPromise((resolve, reject) => {
+      dtAPI.v1.synthetic.getMonitor(entityId).then((data) => {
+        resolve(data);
+      });
+    });
+  },
+  disableMonitor: function (data) {
+    data.enabled = false;
+    return newPromise((resolve, reject) => {
+      dtAPI.v1.synthetic.replaceMonitor(data).then(() => {
+        resolve("disabled");
+      });
+    });
+  },
+
   //GET monitor list
   getListByType: function () {
     console.log("getting list of monitors");
